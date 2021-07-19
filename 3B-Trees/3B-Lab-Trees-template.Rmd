@@ -1,15 +1,15 @@
----
-title: "Lab 3B"
-subtitle: "Tree-based methods and SVM's"
-date: "`r format(Sys.time(), '%Y')`"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    number_sections: false
-    theme: paper
-    highlight: tango
----
+#---
+#title: "Lab 3B"
+#subtitle: "Tree-based methods and SVM's"
+#date: "`r format(Sys.time(), '%Y')`"
+#output: 
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    number_sections: false
+#    theme: paper
+#    highlight: tango
+#---
 
 
 
