@@ -1,17 +1,17 @@
----
-title: "Lab 2A"
-subtitle: "Feature space expansions"
-date: "`r format(Sys.time(), '%Y')`"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    toc_float: true
-    df_print: paged
-    number_sections: false
-    theme: paper
-    highlight: tango
----
+#---
+#title: "Lab 2A"
+#subtitle: "Feature space expansions"
+#date: "`r format(Sys.time(), '%Y')`"
+#output: 
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    toc_float: true
+#    df_print: paged
+#    number_sections: false
+#    theme: paper
+#    highlight: tango
+#---
 
 
 ```{r message = FALSE}
