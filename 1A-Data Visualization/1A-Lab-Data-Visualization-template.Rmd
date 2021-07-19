@@ -1,3 +1,23 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 title: "Lab 1A: Visualization"
 subtitle: "Exploratory data analysis"
