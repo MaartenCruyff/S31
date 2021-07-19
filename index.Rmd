@@ -123,7 +123,7 @@ Data visualization is an art in itself. There are many ways to graphically repre
 
 - [`R Markdown lab template`](1A-Data Visualization/1A-Lab-Data-Visualization-template.Rmd){target="_blank"} 
 
-- [`R Markdown txt template`](1A-Data Visualization/1A-Lab-Data-Visualization-template.txt){target="_blank"} 
+- [`pics/code.png`](1A-Data Visualization/pics/code.png){target="_blank"} 
 
 **Recommended literature**
 
