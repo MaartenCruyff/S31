@@ -1,18 +1,18 @@
-#---
-#title: "Lab 1A: Visualization"
-#subtitle: "Exploratory data analysis"
-#date: "`r format(Sys.time(), '%Y')`"
-#urlcolor: blue
-#output: 
-#  html_document:
-#    toc: true
-#    toc_depth: 2
-#    toc_float: true
-#    df_print: paged
-#    number_sections: false
-#    theme: paper
-#    highlight: tango
-#---
+---
+title: "Lab 1A: Visualization"
+subtitle: "Exploratory data analysis"
+date: "`r format(Sys.time(), '%Y')`"
+urlcolor: blue
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: true
+    df_print: paged
+    number_sections: false
+    theme: paper
+    highlight: tango
+---
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(message=FALSE)
@@ -54,7 +54,7 @@ For help on the `ggplot2` functions, check the [Data Visualization Cheat Sheet](
 
 Make the exercises in the R Markdown template `1A-Lab-Template.Rmd`. You'll find instructions on how to work with R Markdown documents in the template.
 
-The code fo the exercises can be made visible by clicking the ![code](pics/code.png), but first try to find the solution yourself. 
+The code fo the exercises can be made visible by clicking the ![](pics/code.png), but first try to find the solution yourself. 
 
 ---
 
