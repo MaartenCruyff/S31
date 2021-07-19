@@ -1,3 +1,9 @@
+
+
+```{r include=FALSE}
+knitr::opts_chunk$set(message=FALSE)
+```
+
 ---
 title: "Lab 1A: Visualization"
 subtitle: "Exploratory data analysis"
@@ -14,9 +20,7 @@ output:
     highlight: tango
 ---
 
-```{r include=FALSE}
-knitr::opts_chunk$set(message=FALSE)
-```
+
 
 ---
 
