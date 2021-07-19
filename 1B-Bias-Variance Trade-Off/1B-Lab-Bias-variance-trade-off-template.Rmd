@@ -1,17 +1,17 @@
----
-title: "Lab 1B"
-subtitle: "Bias-variance trade-off"
-date: "`r format(Sys.time(), '%Y')`"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    toc_float: true
-    df_print: paged
-    number_sections: false
-    theme: paper
-    highlight: tango
----
+#---
+#title: "Lab 1B"
+#subtitle: "Bias-variance trade-off"
+#date: "`r format(Sys.time(), '%Y')`"
+#output: 
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    toc_float: true
+#    df_print: paged
+#    number_sections: false
+#    theme: paper
+#    highlight: tango
+#---
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(message=FALSE)
