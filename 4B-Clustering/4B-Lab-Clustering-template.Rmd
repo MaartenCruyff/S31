@@ -1,16 +1,16 @@
 #---
-title: "DAV: Lab 4B"
-subtitle: "Clustering"
-date: "`r format(Sys.time(), '%Y')`"
-urlcolor: blue
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    toc_float: true
-    number_sections: false
-    theme: paper
-    highlight: tango
+#title: "DAV: Lab 4B"
+#subtitle: "Clustering"
+#date: "`r format(Sys.time(), '%Y')`"
+#urlcolor: blue
+#output: 
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    toc_float: true
+#    number_sections: false
+#    theme: paper
+#    highlight: tango
 #---
 
 
