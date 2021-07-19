@@ -1,4 +1,3 @@
-#
 ---
 title: "Lab 1B"
 subtitle: "Bias-variance trade-off"
