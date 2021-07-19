@@ -1,19 +1,17 @@
----
-title: "Lab 2B"
-subtitle: "Feature selection"
-date: "`r format(Sys.time(), '%Y')`"
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    toc_float: true
-    df_print: paged
-    number_sections: true
-    theme: paper
-    highlight: tango
-    code_folding: hide
-    pandoc_args: --output=2B-Lab-FeatureSelection-answers.html
----
+#---
+#title: "Lab 2B"
+#subtitle: "Feature selection"
+#date: "`r format(Sys.time(), '%Y')`"
+#output: 
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    toc_float: true
+#    df_print: paged
+#    number_sections: true
+#    theme: paper
+#    highlight: tango
+#---
 
 
 ```{r message = FALSE}
