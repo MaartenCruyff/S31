@@ -1,38 +1,18 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----
-title: "Lab 1A: Visualization"
-subtitle: "Exploratory data analysis"
-date: "`r format(Sys.time(), '%Y')`"
-urlcolor: blue
-output: 
-  html_document:
-    toc: true
-    toc_depth: 2
-    toc_float: true
-    df_print: paged
-    number_sections: false
-    theme: paper
-    highlight: tango
----
+#---
+#title: "Lab 1A: Visualization"
+#subtitle: "Exploratory data analysis"
+#date: "`r format(Sys.time(), '%Y')`"
+#urlcolor: blue
+#output: 
+#  html_document:
+#    toc: true
+#    toc_depth: 2
+#    toc_float: true
+#    df_print: paged
+#    number_sections: false
+#    theme: paper
+#    highlight: tango
+#---
 
 ```{r include=FALSE}
 knitr::opts_chunk$set(message=FALSE)
