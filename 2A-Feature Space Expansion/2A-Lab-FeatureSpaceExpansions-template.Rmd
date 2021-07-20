@@ -15,7 +15,7 @@
 
 
 ```{r message = FALSE}
-knitr::opts_chunk$setmessage=FALSE)
+knitr::opts_chunk$set(message=FALSE)
 library(ggplot2)
 library(gamlss)
 library(splines)

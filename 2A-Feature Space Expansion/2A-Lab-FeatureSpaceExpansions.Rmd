@@ -166,7 +166,7 @@ A regression tree partitions the variable `Profits` in on-overlapping regions, a
 
 a. Use the function `rpart()`  (check its help page), and fit a tree to the data using the "anova" method. Save the fitted object as `tree`.
 
-```{r echo=F}
+```{r}
 tree <- rpart(Assets ~ Profits, data = Fortune500, 
               method = "anova")
 ```
