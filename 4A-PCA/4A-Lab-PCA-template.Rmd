@@ -1,32 +1,38 @@
-#---
-#title: "Lab 4A"
-#subtitle: "Principal Components Analysis"
-#date: "`r format(Sys.time(), '%Y')`"
-#output: 
-#  html_document:
-#    toc: true
-#    toc_depth: 2
-#    toc_float: true
-#    df_print: paged
-#    number_sections: false
-#    theme: paper
-#    highlight: tango
-#---
-
-
+---
+title: "Lab 4A"
+subtitle: "Principal Components Analysis"
+date: "`r format(Sys.time(), '%Y')`"
+params:
+  answers: true
+urlcolor: blue
+output: 
+  html_document:
+    toc: true
+    toc_depth: 2
+    toc_float: false
+    number_sections: false
+    theme: paper
+    highlight: tango
+---
 
 
 ---
 
 
 
-In this lab you perform a PCA to a personality test, a a bag of words and photo's of faces.
+In this lab you perform a PCA to a personality test, a bag of words and photo's of faces.
 
-For this lab you need the packages `stylo` and `psych`, and the data sets in `Profession.Rdata` and `faces.RData`. 
+For this lab you need the packages `stylo` and `psych`, and the data sets in `Profession.Rdata` and `faces.RData`. The package `stylo` includes nine novels by the Bronthe sisters and Jane Austin, and functions to compute the relative frequencies of the words used in these novels.
+
+**Warning for Mac OS users**: the `stylo` package requires X11 support being installed. For details about installing X11, see the github page [stylo: Installation Issues](https://github.com/computationalstylistics/stylo). If you do not want to install X11, do not install the package `stylo`, but instead load the file `novels.Rdata` which contains the data frame `freqs` that you need for the PCA. 
 
 ```{r message=F}
-
+library(stylo) # for Mac OS, only if X11 is installed
+library(psych)
+library(dplyr)
 ```
+
+---
 
 # Personality types
 
@@ -36,13 +42,15 @@ The file "Profession.Rdata" contains the data set `Profession` with preference s
 a. Load the data file "Profession.Rdata", and display the scree plot for the `profession` data. How many PCs does the plot suggest? 
 
 ```{r}
+load("Profession.RData")
 
+VSS.scree(Profession)
 ```
 
 a. There seem to be 7 or 8 PCs with an eigenvalue > 1, but we will ignore the 7th and 8th component. Perform a PCA that extracts 6 factors without rotation, and save the object as `prof_pca`. 
 
 ```{r}
-
+prof_pca <- principal(Profession, nfactors = 6, rotate = "none")
 ```
 
 
@@ -50,26 +58,28 @@ a. There seem to be 7 or 8 PCs with an eigenvalue > 1, but we will ignore the 7t
 c. Display the `loadings` of the first 6 components with the function `print()`, and set the cutoff to 0.4. Do the loadings correspond to the personality types?
 
 ```{r}
-
+print(loadings(prof_pca), cutoff=0.4)
 ```
 
 d. Rerun the PCA with the default "varimax" rotation and save the result as `prof_rot`, and display the rotated component loadings. Did the rotation help interpretation of the personality types?
 
 ```{r}
-
+prof_rot <- principal(Profession, nfactors = 6)
+print(loadings(prof_rot), cutoff = 0.4)
 ```
 
 
 e. To get some idea of the distribution of the PCs, display their means and standard deviations, rounded to 4 decimals.
 
 ```{r}
-
+data.frame(mean  = apply(prof_pca$scores, 2 , mean), sd = apply(prof_pca$scores, 2, sd)) %>% round(4)
 ```
 
 f. Rename the PCs in the names of the personality types in the code book (e.g. Doers, Thinkers, etc), and save the result.
 
 ```{r}
-
+d <- as.data.frame(prof_rot$scores) 
+names(d) <- c("Organizer", "Doer", "Thinker", "Creator", "Helper", "Persuader") 
 ```
 
 
@@ -77,130 +87,131 @@ f. Rename the PCs in the names of the personality types in the code book (e.g. D
 f. Display the scores of a random sample of 5 persons from the data, and interpret this persons personality profile.
 
 ```{r}
-
+d[sample(5389, 5), ] %>%  round(1)
 ```
 
 ---
 
 # Text analysis
 
-In this exercise you use PCA to analyze word frequencies in nine novels by the the three Bronthe sisters and Jane Austin. The data for this analysis are in the `novels` object of the package `stylo`.
+In this exercise you use PCA to analyze word frequencies in nine novels by the the three Bronthe sisters and Jane Austin. The data for this analysis are in the `novels` object of the package `stylo`. (Mac OS users without a X11 installation should skip exercise a.)
 
 a. Load the `novels` object with the command `data()`, and summarize the object with the function `summary()`. 
 
 ```{r}
-
+data(novels)
+summary(novels)
 ```
 
-The code below prepares the data for the PCA. It extracts the relative frequencies of words that occur most frequently in the novels.
+b. Open the R chunk for this exercise. The code prepares the data for the PCA. It extracts the relative frequencies of the most frequently used words. Run it and inspect the content of the object `freqs`. (Mac OS users without a X11 installation should instead load the file `novels.Rdata`.)
 
-```
+```{r}
 tokens   <- txt.to.words.ext(novels, 
                              preserve.case = FALSE)
+
 
 frequent <- make.frequency.list(tokens, 
                                 head = 10)
 
 freqs    <- make.table.of.frequencies(tokens, 
                                       features = frequent)
-```
 
+# load("novels.Rdata") for Mac OS users without X11
 
-b. Copy-paste the code, run it and inspect the content of the object `freqs`.
-
-```{r}
-
+attributes(freqs)
 ```
 
 c. Perform a PCA on the `freqs` object with the function `prcomp()`, and save the result.
 
 ```{r}
-
+author_pca <- prcomp(freqs)
 ```
 
 
 d. Display the scree plot of the `prcomp` object. According to the elbow criterion, how many PCs do we need to extract?
 
 ```{r}
-
+screeplot(author_pca, type="line")
 ```
 
 
 e. Display the biplot of PC1 and PC2, and interpret the plot. Which of the four authors uses "a" and "the" most frequently, and which authors are characterized by the frequent use of "and"?
 
-```{r}
-
+```{r fig.width = 7, fig.height = 7}
+biplot(author_pca, cex = .8)
 ```
 
 
 # Eigenfaces
 
-The data set for this exercise is called `faces` and in the file `faces.RData`. The data for this analysis consist of 2410 pictures of faces of which the pixels are converted to gray scales in the range $(0, 255)$. The pictures all have 8064 pixels  $(96\times84)$. The aim of the analysis to is to create a reduced number of principal components that summarize stereotype faces, a.k.a _eigenfaces_. 
+The data set for this exercise is called `faces` and in the file `faces.RData`. The data for this analysis consist of 2410 pictures of faces of which the pixels are converted to gray scales in the range $(0, 255)$. The pictures all have 8064 pixels  $(96\times84)$. The aim of the analysis to is to create a reduced number of principal components that summarize stereotype faces, a.k.a _eigenfaces_.
+
+
 
 
 
 a. Load this file into workspace with the function `load()`. 
 
 ```{r}
-
+load("faces.RData")
 ```
-
-
 
 
 b. To get some idea of what the data look like, display a summary columns of the first 5 columns (faces) of `faces`.
 
 ```{r}
-
+summary(faces[, 1:5])
 ```
 
 
-c. Run the code below to convert the data back to pictures. The code will show a random selection of 9 faces.
+c. Open the R chunk for this exercise. It contains code that converts the raw data of the first 9 faces to 84 x 96 matrices, and displays an image of the face in gray scales. Run the code.
 
-```
+
+```{r fig.height=9}
 par(mfrow=c(3,3))
-for(i in sample(1:2410, size = 9)){
-  face <- matrix(rev(faces[, i]), nrow = 84, ncol = 96)
+for(i in sample(1:2410, size=9)){
+  face <- matrix(rev(faces[,i]), nrow = 84, ncol = 96)
   image(face, col = gray(0:255 / 255 ))
-```
-
-
-```{r}
-
+}
 ```
 
 d. Perform a PCA on `faces` using `prcomp()` (may take a while), and save the result. 
 
 ```{r}
-
+faces_pca <- prcomp(faces)
 ```
 
 
-e. Apply the code given above to plot eigenfaces of the first 9 principal components. 
+e. In the same way as exercise c, convert the first 9 components scores to 84 x 96 matrices, and display the images of the eigenfaces. 
+
+
+```{r fig.height=9}
+par(mfrow=c(3, 3))
+for(i in 1:9){
+  face <- matrix(rev(faces_pca$x[, i]), nrow = 84, ncol = 96)
+  image(face, col = gray(0:255 / 255 ))
+}
+```
+
+f. In the same way, also display the eigenface images produced by the last 9 principal components. 
+
+```{r fig.height=9}
+par(mfrow=c(3, 3))
+for(i in 2402:2410){
+  face <- matrix(rev(faces_pca$x[, i]), nrow = 84, ncol = 96)
+  image(face, col = gray(0:255 / 255 ))
+}
+```
+
+
+
+g. Include the raw component scores of the 1st as the sole argument in the `plot()` function, and also do this for the 2nd component. These plots do not have any sensible interpretation, but they just look nice!
 
 
 ```{r}
-
-```
-
-f. Also plot the eigenfaces of the last 9 principal components. How would you interpret the results?
-
-```{r}
-
-```
-
-
-
-g. Plots of the component scores give nonsensical but inspiring results. Run the code below and marvel!
-
-```
-par(mfrow=c(3, 2))
-for(i in 1:6)plot(faces_pca$scores[, i])
-```
-
-
-```{r fig.width=10, fig.height=12}
-
+par(mfrow=c(1, 2))
+plot(faces_pca$x[, 1])
+plot(faces_pca$x[, 2])
 ```
 
 ---

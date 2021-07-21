@@ -355,6 +355,11 @@ div.tocify {
 <p>In this lab you perform a PCA to a personality test, a bag of words and photo’s of faces.</p>
 <p>For this lab you need the packages <code>stylo</code> and <code>psych</code>, and the data sets in <code>Profession.Rdata</code> and <code>faces.RData</code>. The package <code>stylo</code> includes nine novels by the Bronthe sisters and Jane Austin, and functions to compute the relative frequencies of the words used in these novels.</p>
 <p><strong>Warning for Mac OS users</strong>: the <code>stylo</code> package requires X11 support being installed. For details about installing X11, see the github page <a href="https://github.com/computationalstylistics/stylo">stylo: Installation Issues</a>. If you do not want to install X11, do not install the package <code>stylo</code>, but instead load the file <code>novels.Rdata</code> which contains the data frame <code>freqs</code> that you need for the PCA.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">eval=</span>params<span class="sc">$</span>answers)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stylo) <span class="co"># for Mac OS; only when X11 is installed</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
 <hr />
 <div id="personality-types" class="section level1">
 <h1>Personality types</h1>
@@ -362,35 +367,35 @@ div.tocify {
 <ol style="list-style-type: lower-alpha">
 <li>Load the data file “Profession.Rdata”, and display the scree plot for the <code>profession</code> data. How many PCs does the plot suggest?</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;Profession.RData&quot;</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">VSS.scree</span>(Profession)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;Profession.RData&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">VSS.scree</span>(Profession)</span></code></pre></div>
 <ol style="list-style-type: lower-alpha">
 <li>There seem to be 7 or 8 PCs with an eigenvalue &gt; 1, but we will ignore the 7th and 8th component. Perform a PCA that extracts 6 factors without rotation, and save the object as <code>prof_pca</code>.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>prof_pca <span class="ot">&lt;-</span> <span class="fu">principal</span>(Profession, <span class="at">nfactors =</span> <span class="dv">6</span>, <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>prof_pca <span class="ot">&lt;-</span> <span class="fu">principal</span>(Profession, <span class="at">nfactors =</span> <span class="dv">6</span>, <span class="at">rotate =</span> <span class="st">&quot;none&quot;</span>)</span></code></pre></div>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Display the <code>loadings</code> of the first 6 components with the function <code>print()</code>, and set the cutoff to 0.4. Do the loadings correspond to the personality types?</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">loadings</span>(prof_pca), <span class="at">cutoff=</span><span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">loadings</span>(prof_pca), <span class="at">cutoff=</span><span class="fl">0.4</span>)</span></code></pre></div>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Rerun the PCA with the default “varimax” rotation and save the result as <code>prof_rot</code>, and display the rotated component loadings. Did the rotation help interpretation of the personality types?</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>prof_rot <span class="ot">&lt;-</span> <span class="fu">principal</span>(Profession, <span class="at">nfactors =</span> <span class="dv">6</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">loadings</span>(prof_rot), <span class="at">cutoff =</span> <span class="fl">0.4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>prof_rot <span class="ot">&lt;-</span> <span class="fu">principal</span>(Profession, <span class="at">nfactors =</span> <span class="dv">6</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">loadings</span>(prof_rot), <span class="at">cutoff =</span> <span class="fl">0.4</span>)</span></code></pre></div>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>To get some idea of the distribution of the PCs, display their means and standard deviations, rounded to 4 decimals.</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">mean  =</span> <span class="fu">apply</span>(prof_pca<span class="sc">$</span>scores, <span class="dv">2</span> , mean), <span class="at">sd =</span> <span class="fu">apply</span>(prof_pca<span class="sc">$</span>scores, <span class="dv">2</span>, sd)) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">mean  =</span> <span class="fu">apply</span>(prof_pca<span class="sc">$</span>scores, <span class="dv">2</span> , mean), <span class="at">sd =</span> <span class="fu">apply</span>(prof_pca<span class="sc">$</span>scores, <span class="dv">2</span>, sd)) <span class="sc">%&gt;%</span> <span class="fu">round</span>(<span class="dv">4</span>)</span></code></pre></div>
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Rename the PCs in the names of the personality types in the code book (e.g. Doers, Thinkers, etc), and save the result.</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(prof_rot<span class="sc">$</span>scores) </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(d) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Organizer&quot;</span>, <span class="st">&quot;Doer&quot;</span>, <span class="st">&quot;Thinker&quot;</span>, <span class="st">&quot;Creator&quot;</span>, <span class="st">&quot;Helper&quot;</span>, <span class="st">&quot;Persuader&quot;</span>) </span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(prof_rot<span class="sc">$</span>scores) </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(d) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Organizer&quot;</span>, <span class="st">&quot;Doer&quot;</span>, <span class="st">&quot;Thinker&quot;</span>, <span class="st">&quot;Creator&quot;</span>, <span class="st">&quot;Helper&quot;</span>, <span class="st">&quot;Persuader&quot;</span>) </span></code></pre></div>
 <ol start="6" style="list-style-type: lower-alpha">
 <li>Display the scores of a random sample of 5 persons from the data, and interpret this persons personality profile.</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>d[<span class="fu">sample</span>(<span class="dv">5389</span>, <span class="dv">5</span>), ] <span class="sc">%&gt;%</span>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>d[<span class="fu">sample</span>(<span class="dv">5389</span>, <span class="dv">5</span>), ] <span class="sc">%&gt;%</span>  <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div>
 <hr />
 </div>
 <div id="text-analysis" class="section level1">
@@ -399,36 +404,36 @@ div.tocify {
 <ol style="list-style-type: lower-alpha">
 <li>Load the <code>novels</code> object with the command <code>data()</code>, and summarize the object with the function <code>summary()</code>.</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(novels)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(novels)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(novels)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(novels)</span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
-<li>The code below prepares the data for the PCA. It extracts the relative frequencies of the most frequently used words. Run it and inspect the content of the object <code>freqs</code>. (Mac OS users without a X11 installation should load the file <code>novels.Rdata</code> here)</li>
+<li>Open the R chunk for this exercise. The code prepares the data for the PCA. It extracts the relative frequencies of the most frequently used words. Run it and inspect the content of the object <code>freqs</code>. (Mac OS users without a X11 installation should instead load the file <code>novels.Rdata</code>.)</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>tokens   <span class="ot">&lt;-</span> <span class="fu">txt.to.words.ext</span>(novels, </span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">preserve.case =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>frequent <span class="ot">&lt;-</span> <span class="fu">make.frequency.list</span>(tokens, </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">head =</span> <span class="dv">10</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>freqs    <span class="ot">&lt;-</span> <span class="fu">make.table.of.frequencies</span>(tokens, </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">features =</span> frequent)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># load(&quot;novels.Rdata&quot;) for Mac OS users without X11</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(freqs)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tokens   <span class="ot">&lt;-</span> <span class="fu">txt.to.words.ext</span>(novels, </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">preserve.case =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>frequent <span class="ot">&lt;-</span> <span class="fu">make.frequency.list</span>(tokens, </span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>                                <span class="at">head =</span> <span class="dv">10</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>freqs    <span class="ot">&lt;-</span> <span class="fu">make.table.of.frequencies</span>(tokens, </span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">features =</span> frequent)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co"># load(&quot;novels.Rdata&quot;) for Mac OS users without X11</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="fu">attributes</span>(freqs)</span></code></pre></div>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Perform a PCA on the <code>freqs</code> object with the function <code>prcomp()</code>, and save the result.</li>
 </ol>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>author_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(freqs)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>author_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(freqs)</span></code></pre></div>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Display the scree plot of the <code>prcomp</code> object. According to the elbow criterion, how many PCs do we need to extract?</li>
 </ol>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screeplot</span>(author_pca, <span class="at">type=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">screeplot</span>(author_pca, <span class="at">type=</span><span class="st">&quot;line&quot;</span>)</span></code></pre></div>
 <ol start="5" style="list-style-type: lower-alpha">
 <li>Display the biplot of PC1 and PC2, and interpret the plot. Which of the four authors uses “a” and “the” most frequently, and which authors are characterized by the frequent use of “and”?</li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(author_pca, <span class="at">cex =</span> .<span class="dv">8</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(author_pca, <span class="at">cex =</span> .<span class="dv">8</span>)</span></code></pre></div>
 </div>
 <div id="eigenfaces" class="section level1">
 <h1>Eigenfaces</h1>
@@ -436,45 +441,45 @@ div.tocify {
 <ol style="list-style-type: lower-alpha">
 <li>Load this file into workspace with the function <code>load()</code>.</li>
 </ol>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;faces.RData&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="st">&quot;faces.RData&quot;</span>)</span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>To get some idea of what the data look like, display a summary columns of the first 5 columns (faces) of <code>faces</code>.</li>
 </ol>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(faces[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(faces[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
 <ol start="3" style="list-style-type: lower-alpha">
-<li>The code converts the data to pictures, and plots a random selection of 9 faces.</li>
+<li>Open the R chunk for this exercise. It contains code that converts the raw data of the first 9 faces to 84 x 96 matrices, and displays an image of the face in gray scales. Run the code.</li>
 </ol>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2410</span>, <span class="at">size=</span><span class="dv">9</span>)){</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  face <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rev</span>(faces[,i]), <span class="at">nrow =</span> <span class="dv">84</span>, <span class="at">ncol =</span> <span class="dv">96</span>)</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(face, <span class="at">col =</span> <span class="fu">gray</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">255</span> <span class="sc">/</span> <span class="dv">255</span> ))</span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">3</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2410</span>, <span class="at">size=</span><span class="dv">9</span>)){</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  face <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rev</span>(faces[,i]), <span class="at">nrow =</span> <span class="dv">84</span>, <span class="at">ncol =</span> <span class="dv">96</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(face, <span class="at">col =</span> <span class="fu">gray</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">255</span> <span class="sc">/</span> <span class="dv">255</span> ))</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Perform a PCA on <code>faces</code> using <code>prcomp()</code> (may take a while), and save the result.</li>
 </ol>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>faces_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(faces)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>faces_pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(faces)</span></code></pre></div>
 <ol start="5" style="list-style-type: lower-alpha">
-<li>Apply the code given above to plot eigenfaces of the first 9 principal components.</li>
-</ol>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>){</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  face <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rev</span>(faces_pca<span class="sc">$</span>x[, i]), <span class="at">nrow =</span> <span class="dv">84</span>, <span class="at">ncol =</span> <span class="dv">96</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(face, <span class="at">col =</span> <span class="fu">gray</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">255</span> <span class="sc">/</span> <span class="dv">255</span> ))</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<ol start="6" style="list-style-type: lower-alpha">
-<li>Also plot the eigenfaces of the last 9 principal components. How would you interpret the results?</li>
+<li>In the same way as exercise c, convert the first 9 components scores to 84 x 96 matrices, and display the images of the eigenfaces.</li>
 </ol>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2402</span><span class="sc">:</span><span class="dv">2410</span>){</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>){</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  face <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rev</span>(faces_pca<span class="sc">$</span>x[, i]), <span class="at">nrow =</span> <span class="dv">84</span>, <span class="at">ncol =</span> <span class="dv">96</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(face, <span class="at">col =</span> <span class="fu">gray</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">255</span> <span class="sc">/</span> <span class="dv">255</span> ))</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<ol start="7" style="list-style-type: lower-alpha">
-<li>Plots the component scores of the first two principal components. The plots do not have any sensible interpretation, they just look nice!</li>
+<ol start="6" style="list-style-type: lower-alpha">
+<li>In the same way, also display the eigenface images produced by the last 9 principal components.</li>
 </ol>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(faces_pca<span class="sc">$</span>x[, <span class="dv">1</span>])</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(faces_pca<span class="sc">$</span>x[, <span class="dv">2</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">3</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">2402</span><span class="sc">:</span><span class="dv">2410</span>){</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  face <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rev</span>(faces_pca<span class="sc">$</span>x[, i]), <span class="at">nrow =</span> <span class="dv">84</span>, <span class="at">ncol =</span> <span class="dv">96</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">image</span>(face, <span class="at">col =</span> <span class="fu">gray</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">255</span> <span class="sc">/</span> <span class="dv">255</span> ))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<ol start="7" style="list-style-type: lower-alpha">
+<li>Include the raw component scores of the 1st as the sole argument in the <code>plot()</code> function, and also do this for the 2nd component. These plots do not have any sensible interpretation, but they just look nice!</li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(faces_pca<span class="sc">$</span>x[, <span class="dv">1</span>])</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(faces_pca<span class="sc">$</span>x[, <span class="dv">2</span>])</span></code></pre></div>
 <hr />
 <p>END OF LAB</p>
 </div>
