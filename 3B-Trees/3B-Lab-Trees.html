@@ -303,9 +303,10 @@ pre code {
 <ol style="list-style-type: lower-alpha">
 <li>Load the <code>spam</code> data, and convert it to <code>spam4</code> as in the previous lab.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;spam&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>spam4 <span class="ot">&lt;-</span> spam <span class="sc">%&gt;%</span> </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">57</span>, ntile, <span class="dv">4</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="cf">function</span>(x)<span class="fu">as.numeric</span>(<span class="fu">cut</span>(x, <span class="fu">c</span>(<span class="sc">-</span><span class="cn">Inf</span>, <span class="fu">unique</span>(<span class="fu">quantile</span>(x, <span class="at">probs=</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, .<span class="dv">1</span>))))))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>spam4 <span class="ot">&lt;-</span> spam <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">57</span>, s)) </span></code></pre></div>
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Make the same vector with indices for the training set as in the previous lab.</li>
 </ol>
