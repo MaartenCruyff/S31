@@ -412,11 +412,11 @@ div.tocify {
 <ol start="2" style="list-style-type: lower-alpha">
 <li>Perform a k-means clustering on the <code>freqs</code> object with 4 clusters, i.e. one cluster for each author. Tabulate the row names of <code>freqs</code> (author_novel) against the cluster numbers. How well did the k-means solution do?</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rownames</span>(freqs), k_3<span class="sc">$</span>cluster)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(<span class="fu">rownames</span>(freqs), k_4<span class="sc">$</span>cluster)</span></code></pre></div>
 <ol start="3" style="list-style-type: lower-alpha">
 <li>Visualize the clustering with the function <code>fviz_cluster</code> of the package <code>factoextra</code>. To make this function work, you first have to convert the class of the <code>freqs</code> object from <code>stylo.data</code> to <code>data.frame</code>.</li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k_3, <span class="fu">scale</span>(<span class="fu">as.data.frame</span>(<span class="fu">unclass</span>(freqs))))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fviz_cluster</span>(k_4, <span class="fu">scale</span>(<span class="fu">as.data.frame</span>(<span class="fu">unclass</span>(freqs))))</span></code></pre></div>
 <ol start="4" style="list-style-type: lower-alpha">
 <li>Also perform a hierarchical clustering on the <code>freqs</code> data, and plot the dendogram, and add rectangles for 4 clusters. Do the clusters correspond to the authors?</li>
 </ol>
@@ -504,6 +504,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')
