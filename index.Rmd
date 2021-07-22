@@ -150,6 +150,7 @@ The bias-variance trade-off is a central concept in supervised learning. The pri
 
 - [`R Markdown lab template`](1B-Bias-Variance Trade-Off/1B-Lab-Bias-variance-trade-off-template.Rmd){target="_blank"}
 
+
 **Recommended literature**
 
 - [ISLR: 2 Statistical learning; 5 Resampling Methods](https://static1.squarespace.com/static/5ff2adbe3fe4fe33db902812/t/6062a083acbfe82c7195b27d/1617076404560/ISLR%2BSeventh%2BPrinting.pdf){target="_blank"}
@@ -280,6 +281,8 @@ Principal components analysis (PCA) is a data reduction technique. It's aim is t
 - [`Profession.txt`](4A-PCA/Profession.txt){target="_blank"}
 
 - [`faces.Rdata`](4A-PCA/faces.RData)
+
+- [`novels.Rdata`](4A-PCA/novels.Rdata)
 
 **Recommended literature**
 
