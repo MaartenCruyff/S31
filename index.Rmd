@@ -333,6 +333,11 @@ Make a brief presentation of your analysis (5-10 minutes), for example in an R M
 If you do not have any data and are not in a group, there is the opportunity to play around with the [Neural Networks: Playground Exercises](https://developers.google.com/machine-learning/crash-course/introduction-to-neural-networks/playground-exercises){target="_blank"}. Students who satisfactorilly solve the Neural Net Spiral exercise are encouraged to present their solution.
 
 
+**Course materials**
+
+- [Lecture sheets](5A Neural Net/Neural_Net.html){target="_blank"}
+
+
 Row
 -----------------------------------------------------------------------
 
