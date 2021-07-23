@@ -337,6 +337,14 @@ If you do not have any data and are not in a group, there is the opportunity to 
 
 - [Lecture sheets](5A Neural Net/Neural_Net.html){target="_blank"}
 
+- [Ioslide Lecture Rmd file](5A Neural Net/Neural_Net.Rmd){target="_blank"}
+
+
+**Recommended literature**
+
+- [Deep Learning with R](https://livebook.manning.com/book/deep-learning-with-r/about-this-book/){target="_blank"}
+
+- [Deep Learning](https://www.deeplearningbook.org/){target="_blank"}
 
 Row
 -----------------------------------------------------------------------
